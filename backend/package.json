@@ -1,0 +1,26 @@
+{
+  "name": "youtube_clone",
+  "version": "1.0.0",
+  "description": "youtube clone",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd backend && node index.js",
+    "client": "cd client && npm start",
+    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeongookmoon/youtube_clone.git"
+  },
+  "author": "Jeong Ook Moon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeongookmoon/youtube_clone/issues"
+  },
+  "homepage": "https://github.com/jeongookmoon/youtube_clone#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.0"
+  }
+}
