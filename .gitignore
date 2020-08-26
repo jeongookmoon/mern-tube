@@ -3,6 +3,7 @@
 */.env
 
 .DS_Store
+*/.development.js
 
 npm-debug.log*
 yarn-debug.log*
