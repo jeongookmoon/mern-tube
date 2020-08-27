@@ -51,14 +51,14 @@ userSchema.pre('save', function(next) {
   }
 });
 
-userSchema.methods.comparePassword = (plainPassword, callback) => {
+userSchema.methods.comparePassword = function(plainPassword, callback) {
   bcrypt.compare(plainPassword, this.password, (error, isMatch) => {
     if (error) return callback(error);
     callback(null, isMatch)
   });
 }
 
-userSchema.methods.generateToken = (callback) => {
+userSchema.methods.generateToken = function (callback) {
   const user = this;
   const token = jwt.sign(user._id.toHexString(), 'secret');
 
@@ -66,6 +66,17 @@ userSchema.methods.generateToken = (callback) => {
   user.save((error, user) => {
     if (error) return callback(error);
     callback(null, user);
+  })
+}
+
+userSchema.statics.findByToken = function(token, callback) {
+  const user = this;
+
+  jwt.verify(token, 'secret', function(error, user_id){
+    user.findOne({'_id': user_id, 'token': token}, function(error, user){
+      if(error) return callback(error);
+      callback(null, user);
+    })
   })
 }
 

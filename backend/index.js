@@ -5,17 +5,29 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const config = require('./config/key');
 const { User } = require('./model/user');
+const { Authentication } = require('./middleware/auth');
+const user = require('./model/user');
+const port = process.env.PORT || 5000;
 
 // enable accessing env variable
 require('dotenv').config();
 
+app.get('/api/user/auth', Authentication, (request, response) => {
+  response.status(200).json({
+    _id: request._id,
+    isAuth: true,
+    email: request.user.email,
+    name: request.user.name,
+    lastname: request.user.lastname,
+    role: request.user.role
+  })
+})
+
 // to remove deprecation warning -> useNewUrlParser: true
 // To use the new Server Discover and Monitoring engine, pass option { useUnifiedTopology: true } to the MongoClient constructor
-mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true })
+mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
   .then(() => console.log('MongoDB connected'))
   .catch((error) => console.log('error', error));
-
-const port = process.env.PORT || 5000;
 
 // for queury string. Extended for removing depreciation warning
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -36,11 +48,12 @@ app.post('/api/users/register', (request, response) => {
 
 app.post('/api/user/login', (request, response) => {
   // find email
+
   User.findOne({ email: request.body.email }, (error, user) => {
     if (!user) {
       return response.json({
         loginSuccess: false,
-        message: "Authentication failure"
+        message: "Authentication failure: can't find email"
       });
     }
 
@@ -49,7 +62,7 @@ app.post('/api/user/login', (request, response) => {
       if (!isMatch) {
         return response.json({
           loginSuccess: false,
-          message: "Authentication failure"
+          message: "Authentication failure: wrong password"
         });
       }
     });
@@ -65,8 +78,19 @@ app.post('/api/user/login', (request, response) => {
   });
 });
 
+app.get("/api/user/logout", Authentication, (request, response) => {
+  User.findOneAndUpdate({ _id: request.user._id }, { token: "" }, (error, doc) => {
+    if (error) return response.json({ success: false, error });
+    return response.status(200).send({
+      success: true
+    })
+  })
+})
+
 app.get('/', (request, response) => {
   response.send("Hello World!");
 });
 
-app.listen(5000);
+app.listen(port, () => {
+  console.log(`Server running at ${port}`);
+});
