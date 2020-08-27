@@ -10,8 +10,7 @@
   "scripts": {
     "start": "node backend/index.js",
     "backend": "nodemon backend/index.js",
-    "client": "cd client && npm start",
-    "heroku-postbuild": "node backend/index.js"
+    "client": "cd client && npm start"
   },
   "repository": {
     "type": "git",
