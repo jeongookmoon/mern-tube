@@ -11,7 +11,7 @@
     "start": "node backend/index.js",
     "backend": "nodemon backend/index.js",
     "client": "cd frontend && npm start",
-    "heroku-postbuild": "npm install --prefix backend"
+    "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
   },
   "repository": {
     "type": "git",

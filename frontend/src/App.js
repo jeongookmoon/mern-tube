@@ -4,7 +4,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        youtube clone!!
+        new project!!
       </header>
     </div>
   );
