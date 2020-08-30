@@ -1,0 +1,20 @@
+@import '~antd/dist/antd.css';
+
+.content {
+  padding: 5vh 2vw 0;
+}
+
+.general_form {
+  margin: 0 auto;
+  padding-top: 30vh;
+  width: 40vw;
+  text-align: center;
+}
+
+.form_button {
+  margin: 0 .2vw;
+}
+
+.error_message {
+  color: red;
+}

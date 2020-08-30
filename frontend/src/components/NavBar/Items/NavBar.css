@@ -1,0 +1,27 @@
+@import '~antd/dist/antd.css';
+
+.navbar {
+  padding: 0 3vw;
+  border-bottom: solid 1px #e8e8e8;
+  background-color: white;
+  width: 100%;
+}
+
+.logo {
+  font-size: 20px;
+  padding-top: .6vh;
+  float: left;
+}
+
+.logo a{
+  color: black;
+}
+
+.menu {
+  border-bottom: none;
+}
+
+.menu_right {
+  float: right;
+  border-bottom-style: none;
+}

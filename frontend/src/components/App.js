@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import About from './about';
-import Login from './login';
+import NavBar from './NavBar/NavBar';
+import Home from './Home/Home';
+import Register from './Register/Register';
+import Login from './Login/Login';
+import Auth from '../hoc/auth';
 
-function App() {
+const App = () => {
   return (
-    <div>
-      <Switch>
-        <Route path="/about" component={About} />
-        <Route path="/login" component={Login} />
-      </Switch>
-      new project
-    </div>
+    <Suspense fallback={(<div>Loading...</div>)}>
+        <NavBar />
+        <Switch>
+          <Route path="/" exact component={Auth(Home, null)} />
+          <Route path="/register" component={Auth(Register, false)} />
+          <Route path="/Login" component={Auth(Login, false)} />
+        </Switch>
+    </Suspense>
   );
 }
 

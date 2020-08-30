@@ -34,14 +34,13 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-app.post('/api/users/register', (request, response) => {
+app.post('/api/user/register', (request, response) => {
   const user = new User(request.body);
 
   user.save((error, userData) => {
     if (error) return response.json({ success: false, error })
     response.status(200).json({
-      success: true,
-      userData
+      success: true
     })
   });
 });
@@ -73,6 +72,7 @@ app.post('/api/user/login', (request, response) => {
       response.cookie('youtube_clone_auth', user.token)
         .status(200).json({
           loginSuccess: true,
+          userId: user._id
         })
     })
   });
@@ -90,6 +90,19 @@ app.get("/api/user/logout", Authentication, (request, response) => {
 app.get('/', (request, response) => {
   response.send("Hello World!");
 });
+
+app.get('/api/user/auth', Authentication, (request, response) => {
+  response.status(200).json({
+    _id: request.user._id,
+    isAdmin: request.user.role === 0 ? false : true,
+    isAuth: true,
+    email: request.user.email,
+    name: request.user.name,
+    lastname: request.user.lastname,
+    role: request.user.role,
+    image: request.user.image
+  })
+})
 
 app.listen(port, () => {
   console.log(`Server running at ${port}`);
