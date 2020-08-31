@@ -46,8 +46,8 @@ const Register = (props) => {
     let body = {
       email,
       password,
-      firstName,
-      lastName
+      name: firstName,
+      lastname: lastName
     }
 
     dispatch(registerUser(body))
