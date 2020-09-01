@@ -21,14 +21,15 @@ const NavBar = () => {
       }
     });
   }
+  
   if (!user.userData) {
-    return (<div>Loading..</div>)
+    return (<div>Loading.. oh navbar</div>)
   }
   
   if (user.userData && user.userData.isAuth) {
     return (
       <div className="navbar">
-        <div className="logo"><a href="/">MERN Tube</a></div>
+        <div className="logo"><a href="/">MERN Tube <span role='img' aria-label="rabbit">🐰</span></a></div>
         {/* To highlight menu based on current path */}
         <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>
@@ -41,7 +42,7 @@ const NavBar = () => {
   
   return (
     <div className="navbar">
-      <div className="logo"><a href="/">MERN Tube</a></div>
+      <div className="logo"><a href="/">MERN Tube <span role='img' aria-label="dog">🐶</span></a></div>
       {/* To highlight menu based on current path */}
       <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
         <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const News = () => {
   return (
-    <div>
-      News
+    <div className="center_message">
+      NEWS Feed Page <span role='img' aria-label="newspaper">📰</span>
     </div>
   )
 }

@@ -1,5 +1,4 @@
 @import '~antd/dist/antd.css';
-
 .content {
   padding: 5vh 2vw 0;
 }
@@ -17,4 +16,11 @@
 
 .error_message {
   color: red;
+}
+
+.center_message {
+  margin: 0 auto;
+  padding-top: 30vh;
+  text-align: center;
+  font-size: 2.5vw;
 }

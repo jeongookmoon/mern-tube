@@ -16,6 +16,7 @@ const Register = (props) => {
   const [lastName, setLastName] = useState("");
   const [errorFlag, setErrorFlag] = useState(false);
   const [confirmPasswordErrorFlag, setConfirmPasswordFlag] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
 
   const updateEmail = (event) => {
     setEmail(event.currentTarget.value);
@@ -54,7 +55,7 @@ const Register = (props) => {
       .then(response => {
         if (response.payload.registerSuccess) {
           setErrorFlag(false);
-          props.history.push('/');
+          setRegisterSuccess(true);
         } else {
           setErrorFlag(true);
         }
@@ -71,6 +72,13 @@ const Register = (props) => {
     setConfirmPasswordFlag(false);
   }
 
+  if (registerSuccess === true) {
+    return (
+      <div className="center_message">
+        <span role='img' aria-label="smile">😊</span> Registration Successful!
+        <span role='img' aria-label="shine">✨</span></div>
+    )
+  }
   return (
     <div className="general_form">
       <form onSubmit={submit}>

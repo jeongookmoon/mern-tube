@@ -1,11 +1,12 @@
 import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import AuthenticationCheck from '../hoc/auth';
 import NavBar from './NavBar/NavBar';
 import Home from './Home/Home';
 import News from './News/News';
 import Register from './Register/Register';
 import Login from './Login/Login';
-import AuthenticationCheck from '../hoc/auth';
+import UploadVideo from './UploadVideo/UploadVideo';
 
 const App = () => {
   return (
@@ -15,7 +16,8 @@ const App = () => {
           <Route path="/" exact component={AuthenticationCheck(Home, null)} />
           <Route path="/news" component={AuthenticationCheck(News, null)} />
           <Route path="/register" component={AuthenticationCheck(Register, false)} />
-          <Route path="/Login" component={AuthenticationCheck(Login, false)} />
+          <Route path="/login" component={AuthenticationCheck(Login, false)} />
+          <Route path="/upload" component={AuthenticationCheck(UploadVideo, true)} />
         </Switch>
     </Suspense>
   );
