@@ -1,7 +1,7 @@
 const { User } = require('../model/user');
 
 let Authentication = (request, response, next) => {
-  let token = request.cookies.youtube_clone_auth;
+  let token = request.cookies.mern-tube_auth;
 
   User.findByToken(token, (error, user) => {
     if (error) throw error;

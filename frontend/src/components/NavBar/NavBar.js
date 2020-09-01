@@ -28,7 +28,7 @@ const NavBar = () => {
   if (user.userData && user.userData.isAuth) {
     return (
       <div className="navbar">
-        <div className="logo"><a href="/">Youtube Clone</a></div>
+        <div className="logo"><a href="/">MERN Tube</a></div>
         {/* To highlight menu based on current path */}
         <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>
@@ -41,7 +41,7 @@ const NavBar = () => {
   
   return (
     <div className="navbar">
-      <div className="logo"><a href="/">Youtube Clone</a></div>
+      <div className="logo"><a href="/">MERN Tube</a></div>
       {/* To highlight menu based on current path */}
       <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
         <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>

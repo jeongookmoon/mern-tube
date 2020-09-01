@@ -1,21 +1,21 @@
 {
-  "name": "youtube_clone",
+  "name": "mern-tube",
   "version": "1.0.0",
-  "description": "youtube clone",
+  "description": "MERN Tube",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeongookmoon/youtube_clone.git"
+    "url": "git+https://github.com/jeongookmoon/mern-tube.git"
   },
   "author": "Jeong Ook Moon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jeongookmoon/youtube_clone/issues"
+    "url": "https://github.com/jeongookmoon/mern-tube/issues"
   },
-  "homepage": "https://github.com/jeongookmoon/youtube_clone#readme",
+  "homepage": "https://github.com/jeongookmoon/mern-tube#readme",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",

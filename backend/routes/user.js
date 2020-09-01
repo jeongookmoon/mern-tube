@@ -26,8 +26,8 @@ router.post('/login', (request, response) => {
       // generate token
       user.generateToken((error, user) => {
         if (error) return response.status(400).send(error);
-        response.cookie('youtube_clone_auth_exp', user.tokenExp);
-        response.cookie('youtube_clone_auth', user.token)
+        response.cookie('mern-tube_auth_exp', user.tokenExp);
+        response.cookie('mern-tube_auth', user.token)
           .status(200).json({
             loginSuccess: true,
             userId: user._id
