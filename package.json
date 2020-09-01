@@ -8,7 +8,7 @@
     "npm": "6.14.5"
   },
   "scripts": {
-    "start": "node ./backend/index.js",
+    "start": "npm install --prefix backend && node ./backend/index.js",
     "backend": "nodemon backend/index.js",
     "client": "cd frontend && npm start",
     "heroku-postbuild": "npm install --prefix frontend && npm run build --prefix frontend"
