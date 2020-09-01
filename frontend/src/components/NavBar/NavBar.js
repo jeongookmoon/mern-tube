@@ -21,7 +21,10 @@ const NavBar = () => {
       }
     });
   }
-
+  if (!user.userData) {
+    return (<div>Loading..</div>)
+  }
+  
   if (user.userData && user.userData.isAuth) {
     return (
       <div className="navbar">
@@ -35,7 +38,7 @@ const NavBar = () => {
       </div>
     );
   }
-
+  
   return (
     <div className="navbar">
       <div className="logo"><a href="/">Youtube Clone</a></div>
