@@ -17,7 +17,7 @@ const App = () => {
           <Route path="/news" component={AuthenticationCheck(News, null)} />
           <Route path="/register" component={AuthenticationCheck(Register, false)} />
           <Route path="/login" component={AuthenticationCheck(Login, false)} />
-          <Route path="/upload" component={AuthenticationCheck(UploadVideo, true)} />
+          <Route path="/video/upload" component={AuthenticationCheck(UploadVideo, true)} />
         </Switch>
     </Suspense>
   );

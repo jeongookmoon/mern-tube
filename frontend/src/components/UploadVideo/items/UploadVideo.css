@@ -1,0 +1,36 @@
+.uploadForm {
+  margin: 0 auto;
+  padding-top: 10vh;
+  font-size: 2.5vw;
+  width: 40vw;
+}
+
+.uploadForm h1 {
+  text-align: center;
+}
+
+.uploadBox {
+  width: 40vw;
+  height: 20vh;
+  border: 1px solid lightgrey;
+  margin: 0 auto;
+  text-align: center;
+  padding-top: 8vh;
+  font-size: 1vw;
+  cursor: pointer;
+  background: #FBFBFB;
+  -webkit-box-shadow: 0 5px 6px -6px #777;
+  -moz-box-shadow: 0 5px 6px -6px #777;
+  box-shadow: 0 5px 6px -6px #777;
+}
+
+.sectionTitle {
+  margin: 0;
+  background: #e6f7ff;
+  font-weight: 400;
+  letter-spacing: .2vw;
+}
+
+.sectionDropdown {
+  width: 10vw;
+}

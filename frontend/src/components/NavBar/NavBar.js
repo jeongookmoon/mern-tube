@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Menu } from 'antd';
 import './Items/NavBar.css';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { logoutUser } from '../../_actions/user_actions';
+import { logoutUser, authenticateUser } from '../../_actions/user_actions';
 
 const NavBar = () => {
-
   const location = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.user);
+
+  useEffect(() => {
+    dispatch(authenticateUser());
+  })
 
   const logout = () => {
     dispatch(logoutUser()).then(response => {
@@ -19,11 +22,11 @@ const NavBar = () => {
       } else {
         alert('Logout fail');
       }
-    });
+    }, []);
   }
   
   if (!user.userData) {
-    return (<div>Loading.. oh navbar</div>)
+    return (<div>Loading...</div>)
   }
   
   if (user.userData && user.userData.isAuth) {
@@ -35,6 +38,8 @@ const NavBar = () => {
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>
           <Menu.Item key="/news"><Link to="/news">News</Link></Menu.Item>
           <Menu.Item key="/register" className="menu_right"><a onClick={logout} >Logout</a></Menu.Item>
+          <Menu.Item key="/video/upload" className="menu_right"><Link to="/video/upload">Upload</Link></Menu.Item>
+          
         </Menu>
       </div>
     );
