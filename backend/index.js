@@ -22,6 +22,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 app.use('/api/user', require('./routes/user'));
+app.use('/api/video', require('./routes/video'));
 
 // for deployment
 if (process.env.NODE_ENV === 'production') {

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import './items/UploadVideo.css';
 import { Form, Input } from 'antd';
+import axios from 'axios';
 
 const { TextArea } = Input;
 
@@ -45,24 +46,31 @@ const UploadVideo = () => {
   }
 
   const onDrop = (acceptedFiles) => {
+    if (acceptedFiles.length < 1)
+      return alert("Selected video size is too big: Max supported size is 10MB");
+
     let formData = new FormData();
     formData.append('file', acceptedFiles[0]);
-    console.log('acceptedFiles', acceptedFiles);
-    console.log('formData.get("file")', formData.get("file"));
     const config = { header: { 'content-type': 'multipart/form-data' } };
 
+    axios.post('/api/video/upload', formData, config)
+      .then(response => {
+        if (response.data.success) {
+
+        } else {
+          alert('Failed to save the video on the server');
+        }
+      })
   }
 
   const onSubmit = (event) => {
     event.preventDefault();
 
-    if (!user.userData || !user.userData.isAuth) {
+    if (!user.userData || !user.userData.isAuth)
       return alert("Please log in to upload video");
-    }
 
-    if (title === "" || privacy === "" || category === "") {
+    if (title === "" || privacy === "" || category === "")
       return alert("Title, privacy and category are required fields");
-    }
   }
 
   return (
@@ -85,6 +93,7 @@ const UploadVideo = () => {
             </div>
           )}
         </Dropzone>
+
         <br /><br />
         <label className="sectionTitle">Title</label>
         <Input
@@ -92,6 +101,7 @@ const UploadVideo = () => {
           value={title}
           required
         />
+
         <br /><br />
         <label className="sectionTitle">Description</label>
         <TextArea
@@ -99,6 +109,7 @@ const UploadVideo = () => {
           value={description}
           rows={5}
         />
+
         <br /><br />
         <label className="sectionTitle">Privacy Setting</label>
         <br />
@@ -107,6 +118,7 @@ const UploadVideo = () => {
             return <option key={index} value={PRIVACY[key]}>{PRIVACY[key]}</option>
           })}
         </select>
+
         <br /><br />
         <label className="sectionTitle">Category</label>
         <br />
