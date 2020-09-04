@@ -24,6 +24,10 @@ app.use(cookieParser());
 app.use('/api/user', require('./routes/user'));
 app.use('/api/video', require('./routes/video'));
 
+//use this to show the image you have in node js server to client (react js)
+//https://stackoverflow.com/questions/48914987/send-image-path-from-node-js-express-server-to-react-client
+app.use('/upload', express.static('upload'));
+
 // for deployment
 if (process.env.NODE_ENV === 'production') {
   // set static folder; All JS and css files read from this folder

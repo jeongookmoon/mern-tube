@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Dropzone from 'react-dropzone';
 import './items/UploadVideo.css';
-import { Form, Input } from 'antd';
+import { Form, Input, Button } from 'antd';
 import axios from 'axios';
 
 const { TextArea } = Input;
@@ -28,6 +28,10 @@ const UploadVideo = () => {
   const [description, setDescription] = useState("");
   const [privacy, setPrivacy] = useState(PRIVACY.PRIVATE);
   const [category, setCategory] = useState(CATEGORY.MOVIE);
+  const [filePath, setFilePath] = useState("");
+  const [clipDuration, setClipDuration] = useState("");
+  const [thumbnailPath, setThumbnailPath] = useState("");
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const updateTitle = (event) => {
     setTitle(event.target.value);
@@ -55,8 +59,23 @@ const UploadVideo = () => {
 
     axios.post('/api/video/upload', formData, config)
       .then(response => {
+        console.log('video response', response.data);
         if (response.data.success) {
-
+          const fileInfo = {
+            filePath: response.data.filePath,
+            fileName: response.data.fileName
+          }
+          setFilePath(response.data.filePath);
+          axios.post('/api/video/thumbnail', fileInfo)
+            .then(response => {
+              console.log('thumbnail response', response.data);
+              if (response.data.success) {
+                setClipDuration(response.data.clipDuration);
+                setThumbnailPath(response.data.thumbnailPath);
+              } else {
+                alert('Failed to make thumbnailPath');
+              }
+            })
         } else {
           alert('Failed to save the video on the server');
         }
@@ -71,12 +90,47 @@ const UploadVideo = () => {
 
     if (title === "" || privacy === "" || category === "")
       return alert("Title, privacy and category are required fields");
+
+    const uploadInfo = {
+      writer: user.userData._id,
+      title,
+      description,
+      privacy,
+      filePath,
+      category,
+      clipDuration,
+      thumbnailPath
+    }
+
+    axios.post('/api/video/uploadInfo', uploadInfo)
+      .then(response => {
+        if (response.data.success) {
+          setUploadSuccess(true);
+        } else {
+          alert('Uploading video clip failed')
+        }
+      })
+  }
+  
+  if (uploadSuccess === true) {
+    return (
+      <div className="center_message">
+        <span role='img' aria-label="smile">😊</span> Thanks for uploading a video !!
+        <span role='img' aria-label="shine">✨</span></div>
+    )
   }
 
   return (
     <div className="uploadForm">
       <Form onSubmit={onSubmit}>
-        <h1>Upload Your Video Today <span role="img" aria-label="video">🎞️</span></h1>
+        {thumbnailPath !== "" ?
+          <div className="thumbnail">
+            <h1>Awesome <span role="img" aria-label="star">⭐</span> Here's Thumbnail</h1>
+            <img src={`http://localhost:5000/${thumbnailPath}`} alt="thumbnail" />
+            <br /><br />
+          </div> :
+          <h1>Upload Your Video Today <span role="img" aria-label="video">🎞️</span></h1>
+        }
         <Dropzone
           onDrop={onDrop}
           multiple={false}
@@ -127,7 +181,13 @@ const UploadVideo = () => {
             return <option key={index} value={CATEGORY[key]}>{CATEGORY[key]}</option>
           })}
         </select>
+
+        <br /><br />
+        <Button type="primary" size="large" onClick={onSubmit}>
+          Submit
+        </Button>
       </Form>
+      <br />
     </div>
   )
 }

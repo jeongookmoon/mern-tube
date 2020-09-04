@@ -1,5 +1,5 @@
 # MERN-Tube
-MERN-Tube is a YouTube-like platform where sharing video and user can interact with each other
+Video Sharing Community powered by MERN+@ Stack!
 Demo: https://mern-tube.herokuapp.com/
 
 ## Main Stack
@@ -15,6 +15,7 @@ Demo: https://mern-tube.herokuapp.com/
 4. Proxy Server: Gateway to link front/backend communication via the same port
 5. Redux-Thunk + Redux-Promise: Enable "dispatch" functions and promises
 6. Multer: NodeJS middleware for handling files for upload
+7. FFMPEG: Library for handling video -> Thumbnail
 
 ## Run Locally
 ```
