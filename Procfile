@@ -1,0 +1,1 @@
+web:npm install --prefix backend && node backend/server.js
