@@ -54,21 +54,16 @@ router.post('/thumbnail', (request, response) => {
 
   let thumbnailPath = "";
   let clipDuration = "";
-  console.log('request.body.filePath', request.body.filePath);
-  ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
-    console.dir(metadata);
-    console.log(metadata.format.duration);
 
+  ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
     clipDuration = metadata.format.duration;
   })
 
   ffmpeg(request.body.filePath)
     .on('filenames', (filenames) => {
-      console.log('Will generate ' + filenames.join(', '))
       thumbnailPath = "upload/thumbnail/" + filenames[0];
     })
     .on('end', () => {
-      console.log('Screenshots taken');
       return response.json({ success: true, thumbnailPath, clipDuration })
     })
     .screenshots({
