@@ -13,9 +13,10 @@ export default function (SpecificComponent, option, adminRoute = null) {
 
     // componentDidMount
     useEffect(() => {
-      dispatch(authenticateUser()).then(response => {
+      dispatch(authenticateUser()).then(async response => {
+        
         // not logged in
-        if (!response.payload.isAuth) {
+        if (await !response.payload.isAuth) {
           if (option) {
             props.history.push('/login');
           }
@@ -31,7 +32,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
           }
         }
       })
-    }, [])
+    }, [dispatch, props.history])
 
     return (
       <SpecificComponent {...props} user={user} />

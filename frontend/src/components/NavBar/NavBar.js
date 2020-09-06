@@ -13,7 +13,7 @@ const NavBar = () => {
 
   useEffect(() => {
     dispatch(authenticateUser());
-  })
+  }, [dispatch])
 
   const logout = () => {
     dispatch(logoutUser()).then(response => {
@@ -22,7 +22,7 @@ const NavBar = () => {
       } else {
         alert('Logout fail');
       }
-    }, []);
+    });
   }
   
   if (!user.userData) {
@@ -39,7 +39,6 @@ const NavBar = () => {
           <Menu.Item key="/news"><Link to="/news">News</Link></Menu.Item>
           <Menu.Item key="/register" className="menu_right"><a onClick={logout} >Logout</a></Menu.Item>
           <Menu.Item key="/video/upload" className="menu_right"><Link to="/video/upload">Upload</Link></Menu.Item>
-          
         </Menu>
       </div>
     );
