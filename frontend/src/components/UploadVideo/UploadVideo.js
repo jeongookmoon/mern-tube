@@ -58,9 +58,9 @@ const UploadVideo = () => {
     const config = { header: { 'content-type': 'multipart/form-data' } };
 
     axios.post('/api/video/upload', formData, config)
-      .then(response => {
+      .then(async response => {
         console.log('video response', response.data);
-        if (response.data.success) {
+        if (await response.data.success) {
           const fileInfo = {
             filePath: response.data.filePath,
             fileName: response.data.fileName

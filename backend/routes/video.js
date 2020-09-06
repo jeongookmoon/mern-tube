@@ -18,16 +18,16 @@ aws.config.update({
 
 const s3_instance = new aws.S3();
 
-const upload = multer({
+let upload = multer({
   storage: multerS3({
     s3: s3_instance,
-    bucket: 'mern-tube/files',
+    bucket: `mern-tube/files`,
     metadata: function (request, file, callback) {
-      callback(null, {fieldName: file.fieldname});
+      callback(null, { fieldName: file.fieldname });
     },
     key: (request, file, callback) => {
       callback(null, `${Date.now()}_${file.originalname}`);
-    } 
+    }
   })
 }).single('file');
 
@@ -63,7 +63,7 @@ router.post('/upload', (request, response) => {
     if (error) {
       return response.json({ success: false, error });
     }
-    
+
     return response.json({ success: true, filePath: response.req.file.location, fileName: response.req.file.key });
   })
 });
@@ -83,28 +83,30 @@ router.post('/thumbnail', (request, response) => {
 
   let thumbnailPath = "";
   let clipDuration = "";
-  
-  // ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
-  //   clipDuration = metadata.format.duration;
-  // })
 
-  // ffmpeg(request.body.filePath)
-  //   .on('filenames', (filenames) => {
-  //     console.log('Will generate ' + filenames.join(', '))
-  //     thumbnailPath = "upload/thumbnail/" + filenames[0];
-  //   })
-  //   .on('end', () => {
-  //     console.log('Screenshots taken');
-  //     return response.json({ success: true, thumbnailPath, clipDuration })
-  //   })
-  //   .screenshots({
-  //     // Will take screens at 20%, 40%, 60% and 80% of the video
-  //     count: 1,
-  //     folder: 'upload/thumbnail',
-  //     size: '320x240',
-  //     // %b input base name without extension
-  //     filename: 'thumbnail-%b.png'
-  //   });
+  ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
+    clipDuration = metadata.format.duration;
+    if (error)
+      console.log('ffprobe error', error);
+  })
+
+  ffmpeg(request.body.filePath)
+    .on('filenames', (filenames) => {
+      console.log('Will generate ' + filenames.join(', '))
+      thumbnailPath = "upload/thumbnail/" + filenames[0];
+    })
+    .screenshots({
+      // Will take screens at 20%, 40%, 60% and 80% of the video
+      count: 1,
+      folder: 'upload/thumbnail',
+      size: '320x240',
+      // %b input base name without extension
+      filename: 'thumbnail-%b.png'
+    })
+    .on('end', () => {
+      console.log('Screenshots taken');
+      return response.json({ success: true, thumbnailPath, clipDuration })
+    });
 });
 
 module.exports = router;
