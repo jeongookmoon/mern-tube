@@ -90,7 +90,7 @@ router.post('/thumbnail', (request, response) => {
     .on('filenames', (filenames) => {
       console.log('Will generate ' + filenames.join(', '))
       fileName = filenames[0];
-      tempPath = TEMP_FOLDER + fileName;
+      tempPath = TEMP_FOLDER + "/" + fileName;
     })
     .screenshots({
       // Will take screens at 20%, 40%, 60% and 80% of the video
