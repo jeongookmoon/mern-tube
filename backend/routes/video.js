@@ -118,7 +118,7 @@ router.post('/thumbnail', (request, response) => {
         if (error) return response.json({ success: false, error });
 
         // remove the temp file at local server
-        fileSystem.unlink(localPath, (error) => {
+        fileSystem.unlink(tempPath, (error) => {
           if (error) return response.json({ success: false, error });
           console.log('Temp file deleted');
         })
