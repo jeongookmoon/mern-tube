@@ -77,7 +77,7 @@ router.post('/thumbnail', (request, response) => {
   let clipDuration = "";
   let fileName = "";
   let tempPath = "";
-  const TEMP_FOLDER = path.resolve("../upload/thumbnail/");
+  const TEMP_FOLDER = path.resolve("./upload/thumbnail/");
 
   ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
     clipDuration = metadata.format.duration;
