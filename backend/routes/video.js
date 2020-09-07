@@ -77,7 +77,7 @@ router.post('/thumbnail', (request, response) => {
   let clipDuration = "";
   let fileName = "";
   let tempPath = "";
-  const TEMP_FOLDER = "upload/thumbnail/";
+  const TEMP_FOLDER = path.resolve("../upload/thumbnail/");
 
   ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
     clipDuration = metadata.format.duration;
@@ -106,10 +106,9 @@ router.post('/thumbnail', (request, response) => {
     .on('end', () => {
       console.log('Screenshots taken');
 
-      localPath = path.resolve(tempPath);
       const params = {
         ACL: 'public-read',
-        Body: fileSystem.createReadStream(localPath),
+        Body: fileSystem.createReadStream(tempPath),
         Key: fileName,
         Bucket: "mern-tube/thumbnail"
       }
