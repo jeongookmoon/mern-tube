@@ -67,9 +67,9 @@ const UploadVideo = () => {
           }
           setFilePath(response.data.filePath);
           axios.post('/api/video/thumbnail', fileInfo)
-            .then(response => {
+            .then( async response => {
               console.log('thumbnail response', response.data);
-              if (response.data.success) {
+              if ( await response.data.success) {
                 setClipDuration(response.data.clipDuration);
                 setThumbnailPath(response.data.thumbnailPath);
               } else {
@@ -123,10 +123,10 @@ const UploadVideo = () => {
   return (
     <div className="uploadForm">
       <Form onSubmit={onSubmit}>
-        {thumbnailPath !== "" ?
+        {thumbnailPath && thumbnailPath !== "" ?
           <div className="thumbnail">
             <h1>Awesome <span role="img" aria-label="star">⭐</span> Here's Thumbnail</h1>
-            <img src={`http://localhost:5000/${thumbnailPath}`} alt="thumbnail" />
+            <img src={`${thumbnailPath}`} alt="thumbnail" />
             <br /><br />
           </div> :
           <h1>Upload Your Video Today <span role="img" aria-label="video">🎞️</span></h1>

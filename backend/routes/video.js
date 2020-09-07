@@ -4,6 +4,8 @@ const multer = require('multer');
 const { Video } = require('../model/video');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
+const fileSystem = require('fs');
+const path = require('path');
 
 // https://stackoverflow.com/questions/45555960/nodejs-fluent-ffmpeg-cannot-find-ffmpeg
 // const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -18,47 +20,38 @@ aws.config.update({
 
 const s3_instance = new aws.S3();
 
-let upload = multer({
-  storage: multerS3({
-    s3: s3_instance,
-    bucket: `mern-tube/files`,
-    metadata: function (request, file, callback) {
-      callback(null, { fieldName: file.fieldname });
-    },
-    key: (request, file, callback) => {
-      callback(null, `${Date.now()}_${file.originalname}`);
-    }
-  })
-}).single('file');
+// const upload = multer({
+//   storage: multerS3({
+//     s3: s3_instance,
+//     bucket: `mern-tube/files`,
+//     metadata: function (request, file, callback) {
+//       callback(null, { fieldName: file.fieldname });
+//     },
+//     key: (request, file, callback) => {
+//       callback(null, `${Date.now()}_${file.originalname}`);
+//     }
+//   })
+// }).single('file');
 
-
-// router.post('/upload', upload.array('upl', 1), (request, response, next) => {
-//   response.send('Successfully uploaded ' + req.files.length + ' files!');
-// });
-
-
-// const storage = multer.diskStorage({
-//   destination: (request, file, callback) => {
-//     callback(null, 'files/');
-//   },
-//   filename: (request, file, callback) => {
-//     callback(null, `${Date.now()}_${file.originalname}`);
-//   },
-//   fileFilter: (request, file, callback) => {
-//     const extension = path.extname(file.originalname)
-
-//     if (extension !== '.mp4')
-//       return callback(response.status(400).end('only mp4 is allowed'), false);
-
-//     callback(null, true);
-//   }
-
-// })
-
-// const upload = multer({ storage: storage }).single("file")
+const makeUploader = (folderName, localFileName = "") => {
+  return multer({
+    storage: multerS3({
+      s3: s3_instance,
+      bucket: `mern-tube/${folderName}`,
+      metadata: function (request, file, callback) {
+        callback(null, { fieldName: file.fieldname });
+      },
+      key: (request, file, callback) => {
+        let fileName = localFileName.includes('png') ? localFileName : `${Date.now()}_${file.originalname}`;
+        callback(null, fileName)
+      }
+    })
+  }).single('file');
+}
 
 router.post('/upload', (request, response) => {
   // save video file on server
+  const upload = makeUploader("files");
   upload(request, response, error => {
     if (error) {
       return response.json({ success: false, error });
@@ -75,37 +68,65 @@ router.post('/uploadInfo', (request, response) => {
   video.save((error, document) => {
     if (error) return response.json({ success: false, error })
     response.status(200).json({ success: true })
-  })
-
+  });
 })
 
 router.post('/thumbnail', (request, response) => {
 
   let thumbnailPath = "";
   let clipDuration = "";
+  let fileName = "";
+  let tempPath = "";
+  const TEMP_FOLDER = "upload/thumbnail/";
 
   ffmpeg.ffprobe(request.body.filePath, (error, metadata) => {
     clipDuration = metadata.format.duration;
     if (error)
-      console.log('ffprobe error', error);
-  })
+      return response.json({ success: false, error });
+  });
+
 
   ffmpeg(request.body.filePath)
     .on('filenames', (filenames) => {
       console.log('Will generate ' + filenames.join(', '))
-      thumbnailPath = "upload/thumbnail/" + filenames[0];
+      fileName = filenames[0];
+      tempPath = TEMP_FOLDER + fileName;
     })
     .screenshots({
       // Will take screens at 20%, 40%, 60% and 80% of the video
       count: 1,
-      folder: 'upload/thumbnail',
+      folder: TEMP_FOLDER,
       size: '320x240',
       // %b input base name without extension
-      filename: 'thumbnail-%b.png'
+      filename: '%b.png'
+    })
+    .on('error', function (error, stdout, stderr) {
+      return response.json({ success: false, error });
     })
     .on('end', () => {
       console.log('Screenshots taken');
-      return response.json({ success: true, thumbnailPath, clipDuration })
+
+      localPath = path.resolve(tempPath);
+      const params = {
+        ACL: 'public-read',
+        Body: fileSystem.createReadStream(localPath),
+        Key: fileName,
+        Bucket: "mern-tube/thumbnail"
+      }
+
+      // upload the thumbnail to s3 bucket
+      s3_instance.upload(params, (error, data) => {
+        if (error) return response.json({ success: false, error });
+
+        // remove the temp file at local server
+        fileSystem.unlink(localPath, (error) => {
+          if (error) return response.json({ success: false, error });
+          console.log('Temp file deleted');
+        })
+
+        thumbnailPath = data.Location;
+        return response.status(200).json({ success: true, thumbnailPath, clipDuration });
+      });
     });
 });
 
