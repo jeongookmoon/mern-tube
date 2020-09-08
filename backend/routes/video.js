@@ -64,7 +64,6 @@ router.post('/upload', (request, response) => {
 router.post('/uploadInfo', (request, response) => {
   // save video info
   const video = new Video(request.body);
-
   video.save((error, document) => {
     if (error) return response.json({ success: false, error })
     response.status(200).json({ success: true })
@@ -127,6 +126,27 @@ router.post('/thumbnail', (request, response) => {
         return response.status(200).json({ success: true, thumbnailPath, clipDuration });
       });
     });
+});
+
+router.get('/getVideos', (request, response) => {
+  // Find all videos, bring info from other schema ('writer' = youtubeUser, in this case)
+  Video.find()
+    .populate('writer')
+    .exec((error, videos) => {
+      if (error) return response.json({ success: false, error });
+      response.status(200).json({ success: true, videos });
+    })
+});
+
+router.get('/getVideoDetail/:videoId', (request, response) => {
+  const videoId = request.params.videoId;
+
+  Video.findOne({ "_id": videoId })
+    .populate('writer')
+    .exec((error, videoDetail) => {
+      if (error) return response.json({ success: false, error });
+      return response.status(200).json({ success: true, videoDetail });
+    })
 });
 
 module.exports = router;

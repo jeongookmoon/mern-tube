@@ -4,7 +4,7 @@ const Schema = moongoose;
 const videoSchema = moongoose.Schema({
   writer: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'youtubeUser'
   },
   title: {
     type: String,
@@ -32,7 +32,7 @@ const videoSchema = moongoose.Schema({
   thumbnailPath: {
     type: String
   }
-}, { timestamp: true })
+}, { timestamps: true })
 
 const Video = moongoose.model('Video', videoSchema);
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import { registerUser } from '../../_actions/user_actions';
+import moment from 'moment';
 
 const compareValue = (current, target) => {
   return (current !== "" && target !== "" && current !== target)
@@ -57,7 +58,8 @@ const Register = (props) => {
     let body = {
       email,
       password,
-      username
+      username,
+      image: `http://gravatar.com/avatar/${moment().unix()}?d=identicon`
     }
 
     dispatch(registerUser(body))

@@ -24,26 +24,26 @@ const NavBar = () => {
       }
     });
   }
-  
+
   if (!user.userData) {
     return (<div>Loading...</div>)
   }
-  
+
   if (user.userData && user.userData.isAuth) {
     return (
       <div className="navbar">
-        <div className="logo"><a href="/">MERN Tube <span role='img' aria-label="rabbit">🐰</span></a></div>
+        <div className="logo"><Link to="/">MERN Tube <span role='img' aria-label="rabbit">🐰</span></Link></div>
         {/* To highlight menu based on current path */}
         <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>
           <Menu.Item key="/news"><Link to="/news">News</Link></Menu.Item>
-          <Menu.Item key="/register" className="menu_right"><a onClick={logout} >Logout</a></Menu.Item>
+          <Menu.Item key="/register" className="menu_right" onClick={logout}>Logout</Menu.Item>
           <Menu.Item key="/video/upload" className="menu_right"><Link to="/video/upload">Upload</Link></Menu.Item>
         </Menu>
       </div>
     );
   }
-  
+
   return (
     <div className="navbar">
       <div className="logo"><a href="/">MERN Tube <span role='img' aria-label="dog">🐶</span></a></div>

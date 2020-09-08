@@ -50,7 +50,7 @@ router.get("/logout", Authentication, (request, response) => {
 
 router.get('/auth', Authentication, (request, response) => {
   response.status(200).json({
-    _id: request._id,
+    _id: request.user._id,
     isAuth: true,
     isAdmin: request.user.role !== 0 ? true : false,
     email: request.user.email,

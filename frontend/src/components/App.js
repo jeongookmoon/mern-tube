@@ -7,6 +7,7 @@ import News from './News/News';
 import Register from './Register/Register';
 import Login from './Login/Login';
 import UploadVideo from './UploadVideo/UploadVideo';
+import VideoDetail from './VideoDetail/VideoDetail';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="/register" component={AuthenticationCheck(Register, false)} />
           <Route path="/login" component={AuthenticationCheck(Login, false)} />
           <Route path="/video/upload" component={AuthenticationCheck(UploadVideo, true)} />
+          <Route path="/video/:videoId" component={AuthenticationCheck(VideoDetail, null)} />
         </Switch>
     </Suspense>
   );

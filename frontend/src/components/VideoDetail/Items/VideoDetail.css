@@ -1,0 +1,32 @@
+.leftBlock {
+  width: 100%; 
+  padding: 3rem 4em;
+}
+
+#video {
+  width: 100%
+}
+
+.sidebar {
+  display: flex;
+  margin-bottom: 1rem;
+  padding: 0 2rem;
+}
+
+.sidebar_video_container {
+ width: 40%;
+ margin-bottom: 1rem;
+}
+
+.sidebar_video_thumbnail {
+  width: 100%;
+}
+
+.sidebar_video_description {
+  width: 50%;
+}
+
+.sidebar_video_description_title {
+  font-size: 1rem;
+  color: black;
+}

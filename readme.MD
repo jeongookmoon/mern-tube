@@ -1,6 +1,6 @@
 # MERN-Tube
 Video Sharing Community powered by MERN+@ Stack!
-Demo: https://mern-tube.herokuapp.com/
+Demo: http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
 
 ## Main Stack
 1. MongoDB: Serve user/video database
@@ -9,12 +9,12 @@ Demo: https://mern-tube.herokuapp.com/
 4. Node: JS server framework
 
 ## Additional Stack
-1. Heroku: Deployment
-2. ANTD: CSS framework
-3. Multer & Dropzone: File upload library
-4. Proxy Server: Gateway to link front/backend communication via the same port
-5. Redux-Thunk + Redux-Promise: Enable "dispatch" functions and promises
-6. Multer: NodeJS middleware for handling files for upload
+1. NGINX: For running FE server + routing to BE endpoint
+2. AWS + EC2 + S3: Deployment + File management
+3. ANTD: CSS framework
+4. Multer || Multer-S3 + AWS-SDK & Dropzone: File upload library
+5. Proxy Server: Gateway to link front/backend communication via the same port
+6. Redux-Thunk + Redux-Promise: Enable "dispatch" functions and promises
 7. FFMPEG: Library for handling video -> Thumbnail
 
 ## Run Locally

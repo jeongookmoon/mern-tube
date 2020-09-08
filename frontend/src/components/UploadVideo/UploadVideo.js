@@ -8,11 +8,12 @@ import axios from 'axios';
 const { TextArea } = Input;
 
 const PRIVACY = {
-  PRIVATE: "Private",
-  PUBLIC: "Public"
+  PUBLIC: "Public",
+  PRIVATE: "Private"
 }
 
 const CATEGORY = {
+  MOMENT: "Moment",
   MOVIE: "Movie",
   MUSIC: "Music",
   VLOG: "VLOG",
@@ -23,10 +24,10 @@ const CATEGORY = {
 
 const UploadVideo = () => {
   const user = useSelector(state => state.user);
-
+  
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [privacy, setPrivacy] = useState(PRIVACY.PRIVATE);
+  const [privacy, setPrivacy] = useState(PRIVACY.PUBLIC);
   const [category, setCategory] = useState(CATEGORY.MOVIE);
   const [filePath, setFilePath] = useState("");
   const [clipDuration, setClipDuration] = useState("");
@@ -59,7 +60,6 @@ const UploadVideo = () => {
 
     axios.post('/api/video/upload', formData, config)
       .then(async response => {
-        console.log('video response', response.data);
         if (await response.data.success) {
           const fileInfo = {
             filePath: response.data.filePath,
@@ -68,7 +68,6 @@ const UploadVideo = () => {
           setFilePath(response.data.filePath);
           axios.post('/api/video/thumbnail', fileInfo)
             .then( async response => {
-              console.log('thumbnail response', response.data);
               if ( await response.data.success) {
                 setClipDuration(response.data.clipDuration);
                 setThumbnailPath(response.data.thumbnailPath);

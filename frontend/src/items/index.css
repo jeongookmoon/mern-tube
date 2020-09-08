@@ -24,3 +24,8 @@
   text-align: center;
   font-size: 2.5vw;
 }
+
+.browse_videos {
+  width: 85%;
+  margin: 3rem auto;  
+}
