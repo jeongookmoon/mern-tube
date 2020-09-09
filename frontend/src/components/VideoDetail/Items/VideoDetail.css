@@ -14,19 +14,21 @@
 }
 
 .sidebar_video_container {
- width: 40%;
+ width: 80%;
  margin-bottom: 1rem;
 }
 
-.sidebar_video_thumbnail {
+.sidebar_video_container img {
   width: 100%;
 }
 
 .sidebar_video_description {
-  width: 50%;
+  width: 70%;
+  padding-left: .5em;
 }
 
 .sidebar_video_description_title {
   font-size: 1rem;
+  font-weight: 600;
   color: black;
 }

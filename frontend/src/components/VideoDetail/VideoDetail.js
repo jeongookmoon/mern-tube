@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Row, Col, List, Avatar } from 'antd';
 import axios from 'axios';
 import SideBar from './Items/SideBar';
+import Subscribe from './Items/Subscribe';
 import './Items/VideoDetail.css';
 
 const VideoDetail = (props) => {
@@ -14,13 +15,12 @@ const VideoDetail = (props) => {
       .then(response => {
         if (response.data.success) {
           setVideoDetail(response.data.videoDetail);
-          console.log('response.data.videoDetail', response.data.videoDetail);
         } else {
           alert('Failed to fetch a video data')
         }
       })
 
-  }, []);
+  }, [videoId]);
 
   if (!videoDetail.writer) {
     return (<div></div>);
@@ -30,7 +30,7 @@ const VideoDetail = (props) => {
       <Col lg={18} xs={24} >
         <div className="leftBlock">
           <video id="video" src={videoDetail.filePath} controls autoPlay />
-          <List.Item actions>
+          <List.Item actions={[<Subscribe userTo={videoDetail.writer._id} userFrom={localStorage.getItem('userId')} />]}>
             <List.Item.Meta
               avatar={<Avatar src={videoDetail.writer.image} />}
               title={videoDetail.title}

@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const SideBar = (props) => {
   const [sideVideos, setSideVideos] = useState([]);
-  const videoId = props.videoId;
+  // const videoId = props.videoId;
 
   useEffect(() => {
     axios.get('/api/video/getVideos')
@@ -23,7 +23,7 @@ const SideBar = (props) => {
       // Math.floor = returns largest integer
       const minutes = Math.floor(video.clipDuration / 60);
       const seconds = Math.floor(video.clipDuration - minutes * 60);
-      console.log('video.thumbnailPath', video.thumbnailPath);
+
       return (
         <div className="sidebar" key={index}>
           <div className="sidebar_video_container">
@@ -33,7 +33,7 @@ const SideBar = (props) => {
             <span className="sidebar_video_description_title">{video.title}</span><br />
             <span>{video.writer.username}</span><br />
             <span>{video.views} views</span><br />
-            <span>{minutes} : {seconds}</span><br />
+            <span className="sidebar_duration">{minutes} : {seconds}</span>
           </div>
         </div>
       );

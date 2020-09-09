@@ -1,5 +1,5 @@
 const moongoose = require('mongoose');
-const Schema = moongoose;
+const Schema = moongoose.Schema;
 
 const videoSchema = moongoose.Schema({
   writer: {
