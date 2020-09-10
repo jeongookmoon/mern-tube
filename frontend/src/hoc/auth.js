@@ -10,11 +10,11 @@ export default function (SpecificComponent, option, adminRoute = null) {
   function AuthenticationCheck(props) {
     let user = useSelector(state => state.user);
     const dispatch = useDispatch();
-
     // componentDidMount
     useEffect(() => {
+      if (user.userData) return;
+      
       dispatch(authenticateUser()).then(async response => {
-        
         // not logged in
         if (await !response.payload.isAuth) {
           if (option) {
@@ -32,11 +32,14 @@ export default function (SpecificComponent, option, adminRoute = null) {
           }
         }
       })
-    }, [dispatch, props.history])
+    }, [dispatch, props.history, user.userData])
 
-    return (
-      <SpecificComponent {...props} user={user} />
-    )
+    if (user.userData) {
+      return (
+        <SpecificComponent {...props} user={user} />
+      )
+    }
+    return (<div></div>)
   }
 
   return AuthenticationCheck

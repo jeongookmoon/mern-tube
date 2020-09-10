@@ -13,6 +13,10 @@ const Subscribe = (props) => {
       userTo
     }
 
+    if (!userFrom) {
+      return alert('Please login to subscribe');
+    }
+
     // Already subscribed
     if (subscribedFlag) {
       axios.post('/api/subscribe/unSubscribe', bothUserInfo)
