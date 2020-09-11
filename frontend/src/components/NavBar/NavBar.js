@@ -10,10 +10,9 @@ const NavBar = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const user = useSelector(state => state.user);
-
   useEffect(() => {
     dispatch(authenticateUser());
-  }, [dispatch])
+  }, [dispatch, history.location])
 
   const logout = () => {
     dispatch(logoutUser()).then(response => {
