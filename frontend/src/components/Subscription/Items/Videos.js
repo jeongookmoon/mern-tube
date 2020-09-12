@@ -33,7 +33,7 @@ const Videos = (props) => {
         </Col>
       );
     })
-    : <div></div>;
+    : <div>No subscription found</div>;
 
 
   return (

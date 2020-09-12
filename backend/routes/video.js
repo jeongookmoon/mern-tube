@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { Video } = require('../model/video');
 const aws = require('aws-sdk');
 const multerS3 = require('multer-s3');
 const fileSystem = require('fs');
 const path = require('path');
+
+const { Video } = require('../model/video');
+const { Subscriber } = require('../model/subscriber');
 
 // https://stackoverflow.com/questions/45555960/nodejs-fluent-ffmpeg-cannot-find-ffmpeg
 // const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
@@ -139,7 +141,7 @@ router.get('/getVideos', (request, response) => {
 });
 
 router.get('/getVideoDetail/:videoId', (request, response) => {
-  const videoId = request.params.videoId;
+  const { videoId } = request.params;
 
   Video.findOne({ "_id": videoId })
     .populate('writer')
@@ -148,5 +150,26 @@ router.get('/getVideoDetail/:videoId', (request, response) => {
       return response.status(200).json({ success: true, videoDetail });
     })
 });
+
+router.get('/getSubscriptionVideos/:userId', (request, response) => {
+  const { userId } = request.params;
+
+  Subscriber.find({ 'userFrom': userId })
+    .exec((error, subscribed_info) => {
+      if (error) return response.json({ success: false, error });
+      let subscribed_merntubers = [];
+
+      subscribed_info.map((eachInfo, index) => {
+        subscribed_merntubers.push(eachInfo.userTo);
+      })
+
+      Video.find({ 'writer': { $in: subscribed_merntubers } })
+        .populate('writer')
+        .exec((error, videos) => {
+          if (error) return response.json({ success: false, error });
+          return response.status(200).json({ success: true, videos });
+        })
+    })
+})
 
 module.exports = router;

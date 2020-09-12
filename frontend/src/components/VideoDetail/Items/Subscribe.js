@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { IDLE, FETCHING, DONE } from '../../../items/fetchingStatus';
 
 const Subscribe = (props) => {
   const [subscribeNumber, setSubscribeNumber] = useState(0);
   const [subscribedFlag, setSubscribedFlag] = useState(false);
-  const [status, setStatus] = useState('idle');
+  const [status, setStatus] = useState(IDLE);
   const { userFrom, userTo } = props;
 
   const onSubscribe = () => {
@@ -45,7 +46,7 @@ const Subscribe = (props) => {
     const subscribeParam = { userTo };
     const subscribedParam = { userTo, userFrom };
 
-    setStatus('fetching');
+    setStatus(FETCHING);
 
     const fetchData = async () => {
       await axios.post('/api/subscribe/subscribeNumber', subscribeParam)
@@ -64,15 +65,14 @@ const Subscribe = (props) => {
           } else {
             alert('Unable to fetch subscribed flag');
           }
+          setStatus(DONE);
         })
-
-      setStatus('fetched');
     }
 
     fetchData();
   }, [userTo, userFrom]);
 
-  if (status === 'fetched') {
+  if (status === DONE) {
     return (
       <div>
         <button

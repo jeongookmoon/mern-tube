@@ -36,6 +36,7 @@ const NavBar = () => {
         <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>
           <Menu.Item key="/news"><Link to="/news">News</Link></Menu.Item>
+          <Menu.Item key="/subscription"><Link to="/subscription">Subscription</Link></Menu.Item>
           <Menu.Item key="/register" className="menu_right" onClick={logout}>Logout</Menu.Item>
           <Menu.Item key="/video/upload" className="menu_right"><Link to="/video/upload">Upload</Link></Menu.Item>
         </Menu>
