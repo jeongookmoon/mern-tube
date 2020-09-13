@@ -32,6 +32,7 @@ const NavBar = () => {
     return (
       <div className="navbar">
         <div className="logo"><Link to="/">MERN Tube <span role='img' aria-label="rabbit">🐰</span></Link></div>
+        <div className="navbar-username">| <span className="menu_right_username">{user.userData.username}</span></div>
         {/* To highlight menu based on current path */}
         <Menu mode="horizontal" className="menu" defaultSelectedKeys={['/']} selectedKeys={[location.pathname]}>
           <Menu.Item key="/"><Link to="/">Home</Link></Menu.Item>

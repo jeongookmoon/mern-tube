@@ -32,3 +32,13 @@
   font-weight: 600;
   color: black;
 }
+
+.myVideoButton {
+  background-color: #8AA2A9;
+  border-radius: 60px;
+  color: white;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 1rem;
+  text-transform: uppercase;
+}

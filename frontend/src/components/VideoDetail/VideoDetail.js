@@ -3,12 +3,14 @@ import { Row, Col, List, Avatar } from 'antd';
 import axios from 'axios';
 import SideBar from './Items/SideBar';
 import Subscribe from './Items/Subscribe';
+import Comment from './Items/Comment';
 import './Items/VideoDetail.css';
 
 const VideoDetail = (props) => {
   const [videoDetail, setVideoDetail] = useState({});
   const videoId = props.match.params.videoId;
   const userId = props.user.userData._id;
+  const { username } = props.user.userData;
 
   useEffect(() => {
     axios.get(`/api/video/getVideoDetail/${videoId}`)
@@ -22,19 +24,24 @@ const VideoDetail = (props) => {
   }, [videoId]);
 
   if (videoDetail.writer && props.user.userData) {
+    const writerId = videoDetail.writer._id;
+    const SubscribeButton = writerId === userId ?
+      <button className="myVideoButton">{username}'s Video</button> : <Subscribe userTo={videoDetail.writer._id} userFrom={userId} />
     return (
       <Row gutter={[16, 16]}>
         <Col lg={18} xs={24} >
           <div className="leftBlock">
             <video id="video" src={videoDetail.filePath} controls autoPlay />
-            <List.Item actions={[<Subscribe userTo={videoDetail.writer._id} userFrom={userId} />]}>
+            <List.Item actions={[SubscribeButton]}>
               <List.Item.Meta
-                avatar={<Avatar src={videoDetail.writer.image} />}
+                avatar={<Avatar src={videoDetail && videoDetail.writer.image} />}
                 title={videoDetail.title}
-                description={videoDetail.description}
+                description={videoDetail.writer.username}
               />
             </List.Item>
+            {videoDetail.description}
             {/* comments */}
+            <Comment videoId={videoId} userId={userId}/>
           </div>
         </Col>
         <Col lg={6} xs={24}>

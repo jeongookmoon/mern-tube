@@ -1,13 +1,31 @@
 import React from 'react';
 import moment from 'moment';
 import { Col, Row, Avatar, Card } from 'antd';
-import './Videos.css';
+import './Items/Videos.css';
 import { Link } from 'react-router-dom';
 
 const { Meta } = Card;
 
+const videoPlay = (event) => {
+  const playPromise = event.target.play();
+  if (playPromise !== undefined) {
+    playPromise
+      .then(response => {
+        // video play auto
+      })
+      .catch(error => {
+        // video play stop
+        console.log('video play error', error);
+      });
+  }
+}
+
+const videoReset = (event) => {
+  event.target.load();
+}
+
 const Videos = (props) => {
-  const { videos } = props;
+  const { videos, noVideoMessage } = props;
 
   const videoBoxes = videos.length > 0 ?
     videos.map((video, index) => {
@@ -19,10 +37,17 @@ const Videos = (props) => {
         <Col lg={6} md={8} xs={24} key={index}>
           <div className="videos_box">
             <Link to={`/video/${video._id}`}>
-              <img alt="thumbnail" className="thumbnail_image" src={video.thumbnailPath} />
+              <video
+                className="thumbnail_image"
+                poster={video.thumbnailPath}
+                onMouseOver={videoPlay}
+                onMouseOut={videoReset}
+                src={video.filePath}
+                muted
+              />
               <div className="duration"><span>{minutes} : {seconds}</span></div>
             </Link>
-          </div> <br />
+          </div>
           <Meta avatar={<Avatar src={video.writer.image} />}
             title={video.title} />
           <span>{video.writer.username}</span><br />
@@ -33,7 +58,7 @@ const Videos = (props) => {
         </Col>
       );
     })
-    : <div></div>;
+    : <div>{noVideoMessage}</div>;
 
 
   return (

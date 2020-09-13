@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from 'antd';
 import axios from 'axios';
-import Videos from './Items/Videos';
+import Videos from '../Videos/Videos';
 import { useSelector } from 'react-redux';
 import { IDLE, FETCHING, DONE } from '../../items/fetchingStatus'
 
@@ -35,7 +35,7 @@ const Subscription = () => {
         <Title level={2} >My Subscription Videos</Title>
         <hr />
         <br /><br />
-        <Videos videos={videos} />
+        <Videos videos={videos} noVideoMessage='No subscription found'/>
       </div>
     );
   }

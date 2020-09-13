@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Typography } from 'antd';
 import axios from 'axios';
-import Videos from './Items/Videos';
+import Videos from '../Videos/Videos';
+import { IDLE, FETCHING, DONE } from '../../items/fetchingStatus'
 
 const { Title } = Typography;
 
 const Home = () => {
   const [videos, setVideos] = useState([]);
+  const [loading, setLoading] = useState(IDLE);
 
   useEffect(() => {
+    setLoading(FETCHING);
     axios.get('/api/video/getVideos')
       .then(response => {
         if (response.data.success) {
@@ -18,17 +21,21 @@ const Home = () => {
         } else {
           alert('Failed to load videos');
         }
+        setLoading(DONE);
       })
   }, []);
 
-  return (
-    <div className="browse_videos">
-      <Title level={2} >Browse Videos</Title>
-      <hr />
-      <br /><br />
-      <Videos videos={videos} />
-    </div>
-  )
+  if (loading === DONE) {
+    return (
+      <div className="browse_videos">
+        <Title level={2} >Browse Videos</Title>
+        <hr />
+        <br /><br />
+        <Videos videos={videos} noVideoMessage='No video found' />
+      </div>
+    );
+  }
+  return (<div></div>);
 }
 
 export default Home;

@@ -1,5 +1,6 @@
 .videos_box {
   position: relative;
+  margin-bottom: 1vh;
 }
 
 .pclass {
@@ -11,15 +12,15 @@
   margin-left: 3rem;
 }
 
-.thumbnail_image {
+.videos_box video {
   width: 100%;
+  height: auto;
 }
 
 .duration {
-  bottom: 0;
-  right: 0;
+  bottom: 9px;
+  right: 4px;
   position: absolute;
-  margin: 4px;
   color: #fff;
   background: rgba(17, 17, 17, 0.8);
   opacity: 0.8;
@@ -29,4 +30,8 @@
   font-size: 12px;
   font-weight: 500;  
   line-height: 12px;
+}
+
+.duration span {
+  bottom: 10px;
 }

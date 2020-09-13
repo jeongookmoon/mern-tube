@@ -25,3 +25,16 @@
   float: right;
   border-bottom-style: none;
 }
+
+.menu_right_username {
+  font-weight: 400;
+  padding-bottom: 6px;
+  border-bottom: 2px dotted #ECA72C;
+  margin-left: 25px;
+  cursor: pointer;
+}
+
+.navbar-username{
+  float: right;
+  margin-top: 12px;
+}
