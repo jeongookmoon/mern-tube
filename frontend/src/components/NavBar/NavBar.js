@@ -11,6 +11,7 @@ const NavBar = () => {
   const history = useHistory();
   const user = useSelector(state => state.user);
   useEffect(() => {
+    console.log('2');
     dispatch(authenticateUser());
   }, [dispatch, history.location])
 

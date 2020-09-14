@@ -43,6 +43,7 @@ const Subscribe = (props) => {
   }
 
   useEffect(() => {
+    console.log('8');
     const subscribeParam = { userTo };
     const subscribedParam = { userTo, userFrom };
 

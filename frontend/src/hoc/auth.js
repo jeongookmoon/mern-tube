@@ -12,6 +12,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
     const dispatch = useDispatch();
     // componentDidMount
     useEffect(() => {
+      console.log('9');
       if (user.userData) return;
       
       dispatch(authenticateUser()).then(async response => {

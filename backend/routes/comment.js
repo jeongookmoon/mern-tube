@@ -13,10 +13,21 @@ router.post('/saveComment', (request, response) => {
       .populate('writer')
       .exec((error, result) => {
         if (error) return response.json({ success: false, error });
-        return response.status(200).json({ success: true });
+        return response.status(200).json({ success: true, comments: result });
       })
 
   })
 });
+
+router.get('/getComments/:videoId', (request, response) => {
+  const { videoId } = request.params;
+
+  Comment.find({ 'videoId': videoId })
+    .populate('writer')
+    .exec((error, comments) => {
+      if (error) return response.json({ success: false, error });
+      return response.status(200).json({ success: true, comments });
+    })
+})
 
 module.exports = router;

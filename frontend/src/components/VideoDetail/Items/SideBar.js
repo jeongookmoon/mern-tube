@@ -6,6 +6,7 @@ const SideBar = (props) => {
   // const videoId = props.videoId;
 
   useEffect(() => {
+    console.log('7');
     axios.get('/api/video/getVideos')
       .then(response => {
         if (response.data.success) {

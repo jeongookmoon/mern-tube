@@ -15,7 +15,6 @@ const videoPlay = (event) => {
       })
       .catch(error => {
         // video play stop
-        console.log('video play error', error);
       });
   }
 }

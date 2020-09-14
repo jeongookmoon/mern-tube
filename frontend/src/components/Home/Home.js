@@ -11,6 +11,7 @@ const Home = () => {
   const [loading, setLoading] = useState(IDLE);
 
   useEffect(() => {
+    console.log('1');
     setLoading(FETCHING);
     axios.get('/api/video/getVideos')
       .then(response => {

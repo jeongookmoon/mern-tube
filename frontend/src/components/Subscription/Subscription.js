@@ -13,6 +13,7 @@ const Subscription = () => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
+    console.log('3');
     let currentUserInfo;
     if (user.userData && user.userData._id) {
       currentUserInfo = user.userData._id;
