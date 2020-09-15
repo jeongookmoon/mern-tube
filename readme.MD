@@ -4,6 +4,12 @@ Video Sharing Community powered by MERN+@ Stack!
 ## Demo
 http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
 
+## Features
+1. Login / Register - JWT token
+2. Upload Video / Thumbnail - Multer + Multer s3 + AWS s3 / FFMPEG
+3. Comment
+4. Like / Dislike
+
 ## Main Stack
 1. MongoDB: Serve user/video database
 2. Express: NodeJS web app/server framework
@@ -18,12 +24,6 @@ http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
 5. Proxy Server: Gateway to link front/backend communication via the same port
 6. Redux-Thunk + Redux-Promise: Enable "dispatch" functions and promises
 7. FFMPEG: Library for handling video -> Thumbnail
-
-## Features
-1. Login / Register - JWT token
-2. Upload Video / Thumbnail - Multer + Multer s3 + AWS s3 / FFMPEG
-3. Comment
-4. Like / Dislike
 
 ## Run Locally
 ```
