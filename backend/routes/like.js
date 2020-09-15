@@ -4,14 +4,20 @@ const router = express.Router();
 const { Like } = require('../model/like');
 const { Dislike } = require('../model/dislike');
 
-const getNewparameters = (property) => {
+const newPostparameters = (property) => {
   if (property.videoId)
     return { videoId: property.videoId, userId: property.userId };
   return { commentId: property.commentId, userId: property.userId };
 }
 
+const newGetParameters = (property) => {
+  if (property.videoId)
+    return { videoId: property.videoId };
+  return { commentId: property.commentId };
+}
+
 router.post('/getLikes', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newGetParameters(request.body);
 
   Like.find(parameters)
     .exec((error, likes) => {
@@ -21,7 +27,7 @@ router.post('/getLikes', (request, response) => {
 })
 
 router.post('/getDislikes', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newGetParameters(request.body);
 
   Dislike.find(parameters)
     .exec((error, dislikes) => {
@@ -31,7 +37,7 @@ router.post('/getDislikes', (request, response) => {
 })
 
 router.post('/postLike', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newPostparameters(request.body);
 
   const like = new Like(parameters);
   like.save((error, postLikeResult) => {
@@ -47,7 +53,7 @@ router.post('/postLike', (request, response) => {
 })
 
 router.post('/postDislike', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newPostparameters(request.body);
 
   const dislike = new Dislike(parameters);
   dislike.save((error, postDislikeResult) => {
@@ -63,7 +69,7 @@ router.post('/postDislike', (request, response) => {
 })
 
 router.post('/deleteLike', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newPostparameters(request.body);
 
   Like.findOneAndDelete(parameters)
     .exec((error, deleteLikeResult) => {
@@ -73,7 +79,7 @@ router.post('/deleteLike', (request, response) => {
 })
 
 router.post('/deleteDislike', (request, response) => {
-  const parameters = getNewparameters(request.body);
+  const parameters = newPostparameters(request.body);
 
   Dislike.findOneAndDelete(parameters)
     .exec((error, deleteDislikeResult) => {
