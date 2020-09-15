@@ -4,18 +4,19 @@ import axios from 'axios';
 import SideBar from './Items/SideBar';
 import Subscribe from './Items/Subscribe';
 import CommentSection from './Items/CommentSection';
+import Likes from './Items/Likes';
 import './Items/VideoDetail.css';
+import Loading from '../../items/Loading';
 
 const VideoDetail = (props) => {
   const [videoDetail, setVideoDetail] = useState({});
-  
+
   const videoId = props.match.params.videoId;
   const userId = props.user.userData._id;
   const { username } = props.user.userData;
   const { userData } = props.user;
 
   useEffect(() => {
-    console.log('4');
     axios.get(`/api/video/getVideoDetail/${videoId}`)
       .then(response => {
         if (response.data.success) {
@@ -39,7 +40,7 @@ const VideoDetail = (props) => {
         <Col lg={18} xs={24} >
           <div className="leftBlock">
             <video id="video" src={videoDetail.filePath} controls autoPlay />
-            <List.Item actions={[SubscribeButton]}>
+            <List.Item actions={[<Likes userId={userId} videoId={videoId} />, SubscribeButton]}>
               <List.Item.Meta
                 avatar={<Avatar src={videoDetail && videoDetail.writer.image} />}
                 title={videoDetail.title}
@@ -56,7 +57,7 @@ const VideoDetail = (props) => {
       </Row>
     );
   }
-  return (<div></div>);
+  return (<Loading />);
 }
 
 export default VideoDetail;

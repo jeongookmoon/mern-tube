@@ -27,5 +27,10 @@
 
 .browse_videos {
   width: 85%;
-  margin: 3rem auto;  
+  margin: 3rem auto;
+}
+
+.center {
+  text-align: center;
+  padding-top: 1vh;
 }

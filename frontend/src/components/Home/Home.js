@@ -3,6 +3,7 @@ import { Typography } from 'antd';
 import axios from 'axios';
 import Videos from '../Videos/Videos';
 import { IDLE, FETCHING, DONE } from '../../items/fetchingStatus'
+import Loading from '../../items/Loading';
 
 const { Title } = Typography;
 
@@ -36,7 +37,7 @@ const Home = () => {
       </div>
     );
   }
-  return (<div></div>);
+  return (<Loading />);
 }
 
 export default Home;

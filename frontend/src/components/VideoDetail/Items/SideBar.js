@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import Loading from '../../../items/Loading';
 
 const SideBar = (props) => {
   const [sideVideos, setSideVideos] = useState([]);
   // const videoId = props.videoId;
 
   useEffect(() => {
-    console.log('7');
     axios.get('/api/video/getVideos')
       .then(response => {
         if (response.data.success) {
@@ -39,7 +39,7 @@ const SideBar = (props) => {
         </div>
       );
     })
-    : <div></div>;
+    : <Loading />;
 
   return (
     <React.Fragment>

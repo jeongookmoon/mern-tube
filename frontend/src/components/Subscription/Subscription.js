@@ -4,6 +4,7 @@ import axios from 'axios';
 import Videos from '../Videos/Videos';
 import { useSelector } from 'react-redux';
 import { IDLE, FETCHING, DONE } from '../../items/fetchingStatus'
+import Loading from '../../items/Loading';
 
 const { Title } = Typography;
 
@@ -13,7 +14,6 @@ const Subscription = () => {
   const user = useSelector(state => state.user);
 
   useEffect(() => {
-    console.log('3');
     let currentUserInfo;
     if (user.userData && user.userData._id) {
       currentUserInfo = user.userData._id;
@@ -40,7 +40,7 @@ const Subscription = () => {
       </div>
     );
   }
-  return (<div></div>);
+  return (<Loading />);
 }
 
 export default Subscription;

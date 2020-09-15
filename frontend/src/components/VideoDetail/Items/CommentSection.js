@@ -4,6 +4,7 @@ import CommentForm from './CommentForm';
 import SingleComment from './SingleComment';
 import ReplyComment from './ReplyComment';
 import { IDLE, FETCHING, DONE } from '../../../items/fetchingStatus';
+import Loading from '../../../items/Loading';
 
 const CommentSection = (props) => {
   const [newComment, setNewComment] = useState('');
@@ -13,7 +14,6 @@ const CommentSection = (props) => {
   const { videoId, userData } = props
 
   useEffect(() => {
-    console.log('5');
     setFetchingStatus(FETCHING);
     axios.get(`/api/comment/getComments/${videoId}`)
       .then(response => {
@@ -51,7 +51,7 @@ const CommentSection = (props) => {
         }
       });
   }
-  if (fetchingStatus !== DONE) return <div></div>
+  if (fetchingStatus !== DONE) return (<Loading />);
   return (
     <div>
       <br />

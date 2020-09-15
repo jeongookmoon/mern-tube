@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { IDLE, FETCHING, DONE } from '../../../items/fetchingStatus';
+import Loading from '../../../items/Loading';
 
 const Subscribe = (props) => {
   const [subscribeNumber, setSubscribeNumber] = useState(0);
@@ -43,7 +44,6 @@ const Subscribe = (props) => {
   }
 
   useEffect(() => {
-    console.log('8');
     const subscribeParam = { userTo };
     const subscribedParam = { userTo, userFrom };
 
@@ -89,7 +89,8 @@ const Subscribe = (props) => {
         </button>
       </div>
     );
-  } else return (<div></div>);
+  }
+  return (<Loading />);
 };
 
 export default Subscribe;

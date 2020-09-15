@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Comment, Avatar } from 'antd';
 import CommentForm from './CommentForm';
+import Likes from '../Items/Likes';
 import axios from 'axios';
 import moment from 'moment';
 
@@ -10,7 +11,7 @@ const SingleComment = (props) => {
 
   const { videoId, commentData, currentUserId, addComment } = props
   const commentOwner = commentData.writer;
-  
+
   const toggleOpenReply = () => {
     setOpenReply(!openReply);
   }
@@ -40,6 +41,7 @@ const SingleComment = (props) => {
   }
 
   const actions = [
+    <Likes commentId={commentData._id} userId={currentUserId} />,
     <span onClick={toggleOpenReply} key="comment-basic-reply-to">Reply to</span>
   ];
 

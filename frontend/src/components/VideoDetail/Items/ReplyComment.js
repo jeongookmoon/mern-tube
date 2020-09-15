@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SingleComment from './SingleComment';
 import { IDLE, FETCHING, DONE } from '../../../items/fetchingStatus';
-
+import Loading from '../../../items/Loading';
 
 const ReplyComment = (props) => {
   const { currentUserId, videoId, addComment, parentCommentId, commentList } = props;
@@ -10,9 +10,8 @@ const ReplyComment = (props) => {
   const [fetchingStatus, setFetchingStatus] = useState(IDLE);
 
   useEffect(() => {
-    console.log('6');
     setFetchingStatus(FETCHING);
-    const commentNumber = commentList.filter((comment => comment.responseTo === parentCommentId)).length;
+    const commentNumber = commentList.filter(comment => comment.responseTo === parentCommentId).length;
     setReplyNumber(commentNumber);
     setFetchingStatus(DONE);
   }, [commentList, parentCommentId]);
@@ -44,7 +43,7 @@ const ReplyComment = (props) => {
     else if (number > 1) return `View #${number} replies`;
   }
 
-  if (fetchingStatus !== DONE) return <div></div>
+  if (fetchingStatus !== DONE) return (<Loading />);
   return (
     <div>
       { replyNumber > 3 &&

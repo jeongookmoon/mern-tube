@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { authenticateUser } from '../_actions/user_actions';
+import Loading from '../items/Loading';
 
 export default function (SpecificComponent, option, adminRoute = null) {
   // adminRoute===false: anyone can reach
@@ -12,9 +13,8 @@ export default function (SpecificComponent, option, adminRoute = null) {
     const dispatch = useDispatch();
     // componentDidMount
     useEffect(() => {
-      console.log('9');
       if (user.userData) return;
-      
+
       dispatch(authenticateUser()).then(async response => {
         // not logged in
         if (await !response.payload.isAuth) {
@@ -40,7 +40,7 @@ export default function (SpecificComponent, option, adminRoute = null) {
         <SpecificComponent {...props} user={user} />
       )
     }
-    return (<div></div>)
+    return (<Loading />);
   }
 
   return AuthenticationCheck

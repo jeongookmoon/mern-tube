@@ -4,6 +4,7 @@ import './Items/NavBar.css';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logoutUser, authenticateUser } from '../../_actions/user_actions';
+import Loading from '../../items/Loading';
 
 const NavBar = () => {
   const location = useLocation();
@@ -11,7 +12,6 @@ const NavBar = () => {
   const history = useHistory();
   const user = useSelector(state => state.user);
   useEffect(() => {
-    console.log('2');
     dispatch(authenticateUser());
   }, [dispatch, history.location])
 
@@ -26,7 +26,7 @@ const NavBar = () => {
   }
 
   if (!user.userData) {
-    return (<div>Loading...</div>)
+    return (<Loading />);
   }
 
   if (user.userData && user.userData.isAuth) {
