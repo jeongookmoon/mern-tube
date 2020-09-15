@@ -1,6 +1,8 @@
 # MERN-Tube
 Video Sharing Community powered by MERN+@ Stack!
-Demo: http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
+
+## Demo
+http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
 
 ## Main Stack
 1. MongoDB: Serve user/video database
