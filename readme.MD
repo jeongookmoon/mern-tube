@@ -7,8 +7,9 @@ http://ec2-18-216-228-79.us-east-2.compute.amazonaws.com
 ## Features
 1. Login / Register - JWT token
 2. Upload Video / Thumbnail - Multer + Multer s3 + AWS s3 / FFMPEG
-3. Comment
-4. Like / Dislike
+3. Subscribe / Subscribe Page
+4. Comment / ReplyToComment
+5. Like / Dislike
 
 ## Main Stack
 1. MongoDB: Serve user/video database
