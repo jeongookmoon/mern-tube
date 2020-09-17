@@ -151,6 +151,21 @@ router.get('/getVideoDetail/:videoId', (request, response) => {
     })
 });
 
+router.put('/updateView/:videoId', (request, response) => {
+  const { videoId } = request.params;
+
+  Video.findOneAndUpdate({ "_id": videoId }, {
+    $inc: {
+      views: 1
+    }
+  }).populate('writer')
+    .exec((error, videoDetail) => {
+      if (error) return response.json({ success: false, error });
+      return response.status(200).json({ success: true, videoDetail });
+    })
+
+});
+
 router.get('/getSubscriptionVideos/:userId', (request, response) => {
   const { userId } = request.params;
 

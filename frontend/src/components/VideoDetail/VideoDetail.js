@@ -17,14 +17,27 @@ const VideoDetail = (props) => {
   const { userData } = props.user;
 
   useEffect(() => {
-    axios.get(`/api/video/getVideoDetail/${videoId}`)
-      .then(response => {
-        if (response.data.success) {
-          setVideoDetail(response.data.videoDetail);
-        } else {
-          alert('Failed to fetch video data')
-        }
-      })
+    // const getVideoInfo = async () => {
+    //   await axios.get(`/api/video/getVideoDetail/${videoId}`)
+    //     .then(response => {
+    //       if (response.data.success)
+    //         setVideoDetail(response.data.videoDetail);
+    //       else
+    //         alert('Failed to fetch video data');
+    //     });
+    // }
+
+    const getUpdatedVideoInfo = async () => {
+      await axios.put(`/api/video/updateView/${videoId}`)
+        .then(response => {
+          if (response.data.success)
+            setVideoDetail(response.data.videoDetail);
+          else
+            alert('Failed to update video data');
+        });
+    }
+
+    getUpdatedVideoInfo();
   }, [videoId]);
 
   if (videoDetail.writer && props.user.userData) {
@@ -40,7 +53,7 @@ const VideoDetail = (props) => {
         <Col lg={18} xs={24} >
           <div className="leftBlock">
             <video id="video" src={videoDetail.filePath} controls autoPlay />
-            <List.Item actions={[<Likes userId={userId} videoId={videoId} />, SubscribeButton]}>
+            <List.Item actions={[<p>{videoDetail.views + 1} {videoDetail.views && videoDetail.views > 1 ? 'views' : 'view'}</p>, <Likes userId={userId} videoId={videoId} />, SubscribeButton]}>
               <List.Item.Meta
                 avatar={<Avatar src={videoDetail && videoDetail.writer.image} />}
                 title={videoDetail.title}

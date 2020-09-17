@@ -51,7 +51,7 @@ const Videos = (props) => {
             title={video.title} />
           <span>{video.writer.username}</span><br />
           <div className="pclass">
-            <p className="videos_box_detail">{video.views} views</p>
+            <p className="videos_box_detail">{video.views} {video.views && video.views > 1 ? 'views' : 'view'}</p>
             <p>{moment(video.createdAt).format("MMM Do, YYYY")}</p>
           </div>
         </Col>
