@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import ReactQuill from 'react-quill';
 import { Typography, Button, Form } from 'antd';
-
+import 'react-quill/dist/quill.snow.css';
+import 'react-quill/dist/quill.bubble.css';
+import 'react-quill/dist/quill.core.css';
 
 const { Title } = Typography;
 
@@ -38,6 +40,7 @@ const Blogs = (props) => {
           onFilesChange={onFilesChange}
           value={content}
           onChange={setContent}
+          theme="snow"
         />
 
         <Form onSubmit={onSubmit}>

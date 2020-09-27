@@ -9,6 +9,7 @@ import Login from './Login/Login';
 import UploadVideo from './UploadVideo/UploadVideo';
 import VideoDetail from './VideoDetail/VideoDetail';
 import Subscription from './Subscription/Subscription';
+import CreatePost from './Blog/CreatePost';
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/video/upload" component={AuthenticationCheck(UploadVideo, true)} />
           <Route path="/video/:videoId" component={AuthenticationCheck(VideoDetail, null)} />
           <Route path="/subscription" component={AuthenticationCheck(Subscription, true)} />
+          <Route path="/blog/createpost" component={AuthenticationCheck(CreatePost, null)} />
         </Switch>
     </Suspense>
   );
