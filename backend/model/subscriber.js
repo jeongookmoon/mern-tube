@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
-const subscriberSchema = mongoose.Schema({
+const subscriberSchema = Schema({
   userTo: {
     type: Schema.Types.ObjectId,
     ref: 'youtubeUser'
@@ -13,6 +13,6 @@ const subscriberSchema = mongoose.Schema({
 
 }, { timestamps: true })
 
-const Subscriber = mongoose.model('Subscriber', subscriberSchema);
+const Subscriber = model('Subscriber', subscriberSchema);
 
 module.exports = { Subscriber };

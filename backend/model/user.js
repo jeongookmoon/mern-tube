@@ -3,8 +3,9 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
+const { Schema, model } = mongoose;
 
-const userSchema = mongoose.Schema({
+const userSchema = Schema({
   username: {
     type: String,
     maxLength: 50
@@ -79,6 +80,6 @@ userSchema.statics.findByToken = function (token, callback) {
   })
 }
 
-const User = mongoose.model('youtubeUser', userSchema);
+const User = model('youtubeUser', userSchema);
 
 module.exports = { User };

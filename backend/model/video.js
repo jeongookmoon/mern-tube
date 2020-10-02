@@ -1,7 +1,7 @@
 const moongoose = require('mongoose');
-const Schema = moongoose.Schema;
+const { Schema, model } = moongoose;
 
-const videoSchema = moongoose.Schema({
+const videoSchema = Schema({
   writer: {
     type: Schema.Types.ObjectId,
     ref: 'youtubeUser'
@@ -34,6 +34,6 @@ const videoSchema = moongoose.Schema({
   }
 }, { timestamps: true })
 
-const Video = moongoose.model('Video', videoSchema);
+const Video = model('Video', videoSchema);
 
 module.exports = { Video }

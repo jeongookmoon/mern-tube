@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
-const dislikeSchema = mongoose.Schema({
+const dislikeSchema = Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'youtubeuser'
@@ -16,6 +16,6 @@ const dislikeSchema = mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Dislike = mongoose.model('Dislike', dislikeSchema);
+const Dislike = model('Dislike', dislikeSchema);
 
 module.exports = { Dislike };

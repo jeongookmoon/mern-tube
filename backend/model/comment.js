@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
-const commentSchema = mongoose.Schema({
+const commentSchema = Schema({
   writer: {
     type: Schema.Types.ObjectId,
     ref: 'youtubeUser'
@@ -20,6 +20,6 @@ const commentSchema = mongoose.Schema({
 
 }, { timestamps: true })
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = model('Comment', commentSchema);
 
 module.exports = { Comment };

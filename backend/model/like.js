@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
-const likeSchema = mongoose.Schema({
+const likeSchema = Schema({
   userId: {
     type: Schema.Types.ObjectId,
     ref: 'youtubeuser'
@@ -16,6 +16,6 @@ const likeSchema = mongoose.Schema({
   }
 }, { timestamps: true });
 
-const Like = mongoose.model('Like', likeSchema);
+const Like = model('Like', likeSchema);
 
 module.exports = { Like };
